@@ -59,7 +59,7 @@ router.post("/register", async (req, res) => {
   let rows = await database.select("users", {
     wallet: data.wallet,
   });
-  
+
 
   if (rows.status == "failed") {//database failed
     res.send({ status: "failed", msg: "get: db error" });
@@ -84,7 +84,7 @@ router.post("/register", async (req, res) => {
 
         rows = await database.insert("users", {
           ...data,
-          token_amount:token_amount
+          token_amount: token_amount
         });
 
         rows = await database.select("users");
@@ -102,7 +102,7 @@ router.post("/exchange_score", async (req, res) => {
   let params = req.body;
   let result = await database.update("users", {
     u_id: params.u_id,
-    token_amount: params.token_amount * 1 - params.exchange_score *1,
+    token_amount: params.token_amount * 1 - params.exchange_score * 1,
     score_amount: params.score_amount * 1 + params.exchange_score * 1
   }, {
     u_id: params.u_id

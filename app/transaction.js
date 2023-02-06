@@ -7,7 +7,7 @@ const chainList = require("../config/chain.json");
 const routerABI = require("../abis/TransferRouter.json");
 
 router.post("/register/:tx_hash", async (req, res) => {
-  
+
   let tx_hash = req.params.tx_hash;
 
   if (chainList[25] == null) {
@@ -19,7 +19,7 @@ router.post("/register/:tx_hash", async (req, res) => {
 
   //check if exist token transaction
   let rows = await database.select("transactions", {
-    transaction_id:tx_hash
+    transaction_id: tx_hash
   });
 
   if (rows.status == "failed") {//database failed
@@ -28,7 +28,7 @@ router.post("/register/:tx_hash", async (req, res) => {
     res.send({ status: "failed", msg: "register: registered transaction" });
   } else {
     try {
-      web3.eth.getTransaction(tx_hash, async(error, tx_info) => {
+      web3.eth.getTransaction(tx_hash, async (error, tx_info) => {
         if (error != null) {
           res.send({
             status: "failed",
@@ -57,10 +57,10 @@ router.post("/register/:tx_hash", async (req, res) => {
                 msg: "register: tx hash is not correct",
               });
               return;
-            }else{
+            } else {
               if (
                 tx_info.to.toLowerCase() !=
-                  chainList[25]["routerAddress"].toLowerCase() ||
+                chainList[25]["routerAddress"].toLowerCase() ||
                 tx_info.status === false
               ) {
                 res.send({
@@ -69,21 +69,21 @@ router.post("/register/:tx_hash", async (req, res) => {
                 });
                 return;
               }
-      
+
               let rows = await database.insert("transactions", {
-                transaction_id:tx_hash,
-                sender:event[0]["returnValues"][0],
-                amount:event[0]["returnValues"][2] * 1,
+                transaction_id: tx_hash,
+                sender: event[0]["returnValues"][0],
+                amount: event[0]["returnValues"][2] * 1,
               });
-      
-              if(rows.status == "success"){
+
+              if (rows.status == "success") {
                 res.send({
-                  status:"success",
-                  msg:"registered successfully",
+                  status: "success",
+                  msg: "registered successfully",
                 });
-      
-                database.plus('users','token_amount',event[0]["returnValues"][2] * 1,{wallet:event[0]["returnValues"][0]});
-              }else{
+
+                database.plus('users', 'token_amount', event[0]["returnValues"][2] * 1, { wallet: event[0]["returnValues"][0] });
+              } else {
                 res.send({
                   status: "failed",
                   msg: "database query error",
@@ -100,10 +100,10 @@ router.post("/register/:tx_hash", async (req, res) => {
   }
 });
 
-router.get("/get/:wallet", async (req, res) =>{
+router.get("/get/:wallet", async (req, res) => {
 });
 
-router.get("/list", async (req, res) =>{
+router.get("/list", async (req, res) => {
   //get wallet info
   let rows = await database.select("transactions");
   if (rows.status == "failed") {//database failed

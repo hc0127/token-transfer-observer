@@ -53,9 +53,9 @@ module.exports = {
       return { status: "success", uID: res[0].insertId };
     else return { status: "failed" };
   },
-  plus: async (table, field, plus, where) =>{
+  plus: async (table, field, plus, where) => {
     con = await mysql.createConnection(dbInfo);
-    var sql = "UPDATE " + table + " SET " + field +  " = " + field + "+" + plus;
+    var sql = "UPDATE " + table + " SET " + field + " = " + field + "+" + plus;
     var first = true;
     if (where) {
       sql += " WHERE ";
