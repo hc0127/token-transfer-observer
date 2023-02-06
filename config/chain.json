@@ -1,0 +1,56 @@
+{
+    "56": {
+        "chainId": "56",
+        "name": "Binance Smart Chain",
+        "rpcUrl": "https://bsc-dataseed.binance.org/",
+        "scanUrl": "https://bscscan.com/",
+        "wssUrl": "",
+        "blockPeriod": "3000",
+        "routerAddress": "0xd8dB8626EBcfCad0633037E579B58667DeF6d098"
+    },
+    "97": {
+        "chainId": "97",
+        "name": "BSC Testnet",
+        "rpcUrl": "https://data-seed-prebsc-1-s1.binance.org:8545",
+        "scanUrl": "https://testnet.bscscan.com/",
+        "wssUrl": "",
+        "blockPeriod": "3000",
+        "routerAddress": "0xd8dB8626EBcfCad0633037E579B58667DeF6d098"
+    },
+    "7363": {
+        "chainId": "7363",
+        "name": "DND Network",
+        "rpcUrl": "https://rpc.dynochain.io/",
+        "scanUrl": "https://dynoscan.io/",
+        "wssUrl": "",
+        "blockPeriod": "3000",
+        "routerAddress": "0x8BD3CE58362074bf1aF429D4eb9398c17d614597"
+    },
+    "7364": {
+        "chainId": "7364",
+        "name": "DND Testnet",
+        "rpcUrl": "https://rpctest.dynochain.io/",
+        "scanUrl": "https://testnet.dynoscan.io/",
+        "wssUrl": "",
+        "blockPeriod": "3000",
+        "routerAddress": "0x8BD3CE58362074bf1aF429D4eb9398c17d614597"
+    },
+    "25": {
+        "chainId": "25",
+        "name": "Cronos Network",
+        "rpcUrl": "https://evm.cronos.org",
+        "scanUrl": "https://cronoscan.com/",
+        "wssUrl": "",
+        "blockPeriod": "3000",
+        "routerAddress": "0x5eb71485f0736d368ddc5f290ac217d2a877fcf9"
+    },
+    "38": {
+        "chainId": "38",
+        "name": "Cronos Testnet",
+        "rpcUrl": "https://evm-t3.cronos.org",
+        "scanUrl": "https://testnet.cronoscan.com/",
+        "wssUrl": "",
+        "blockPeriod": "3000",
+        "routerAddress": "0x5eb71485f0736d368ddc5f290ac217d2a877fcf9"
+    }
+}
