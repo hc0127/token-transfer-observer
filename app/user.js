@@ -19,18 +19,19 @@ router.get("/list", async (req, res) => {
 router.post("/login", async (req, res) => {
   let info = req.body;
 
-  let rows = await database.select("admin", {
+  let rows = await database.select("user", {
     email: info.email,
   });
 
   if (rows.data.length > 0) {
-    rows = await database.select("admin", {
+    rows = await database.select("user", {
       email: info.email,
-      password: md5(info.password)
+      password: md5(info.password),
+      verified:1
     });
     if (rows.data.length > 0) {
       var token = randomstring.generate(60);
-      await database.update("admin", {
+      await database.update("user", {
         token: token
       }, {
         email: info.email
@@ -56,10 +57,11 @@ router.post("/login", async (req, res) => {
 router.post("/register", async (req, res) => {
   let data = req.body;
 
-  let rows = await database.select("users", {
+  let rows = await database.selectOr("users", {
+    userID: data.userID,
     wallet: data.wallet,
+    email: data.email,
   });
-
 
   if (rows.status == "failed") {//database failed
     res.send({ status: "failed", msg: "get: db error" });
@@ -84,7 +86,9 @@ router.post("/register", async (req, res) => {
 
         rows = await database.insert("users", {
           ...data,
-          token_amount: token_amount
+          token_amount: token_amount,
+          password:md5(data.password),
+          verified:0,
         });
 
         rows = await database.select("users");

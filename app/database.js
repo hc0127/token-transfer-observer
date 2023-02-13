@@ -16,6 +16,14 @@ module.exports = {
     if (rows == null || rows == undefined) return { status: "failed" };
     else return { status: "success", data: rows };
   },
+  selectOr: async (table, params = null) => {
+    con = await mysql.createConnection(dbInfo);
+    var sql = "SELECT * FROM " + table + " WHERE 1 = 1";
+    for (var i in params) sql += " OR " + i + " = ?";
+    let [rows] = await con.query(sql, Object.values(params));
+    if (rows == null || rows == undefined) return { status: "failed" };
+    else return { status: "success", data: rows };
+  },
   insert: async (table, params) => {
     con = await mysql.createConnection(dbInfo);
     var sql = "INSERT INTO " + table + "(" + Object.keys(params).join(",") + ") VALUES(\"" + Object.values(params).join("\",\"") + "\")";
