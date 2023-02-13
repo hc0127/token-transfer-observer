@@ -19,19 +19,18 @@ router.get("/list", async (req, res) => {
 router.post("/login", async (req, res) => {
   let info = req.body;
 
-  let rows = await database.select("user", {
+  let rows = await database.select("users", {
     email: info.email,
   });
 
   if (rows.data.length > 0) {
-    rows = await database.select("user", {
+    rows = await database.select("users", {
       email: info.email,
       password: md5(info.password),
-      verified:1
     });
     if (rows.data.length > 0) {
       var token = randomstring.generate(60);
-      await database.update("user", {
+      await database.update("users", {
         token: token
       }, {
         email: info.email
@@ -84,11 +83,25 @@ router.post("/register", async (req, res) => {
           token_amount += row.amount * 1;
         })
 
+        var verify_code = randomstring.generate(20);
+
         rows = await database.insert("users", {
           ...data,
           token_amount: token_amount,
           password:md5(data.password),
           verified:0,
+          verify_code:verify_code
+        });
+        
+        const sendmail = require('sendmail')();
+        sendmail({
+            from: 'no-reply@yourdomain.com',
+            to: data.email,
+            subject: 'confirmable verify code',
+            html: '<h1>Confirm your email address</h1><p>Your confirmation code is below — enter it in your open browser window and we\'ll help you get signed in.</p><p>verify code:'+ verify_code + '</p>',
+          }, function(err, reply) {
+            console.log(err && err.stack);
+            console.dir(reply);
         });
 
         rows = await database.select("users");
