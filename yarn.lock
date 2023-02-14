@@ -2830,7 +2830,7 @@
   "resolved" "https://registry.npmjs.org/url-set-query/-/url-set-query-1.0.0.tgz"
   "version" "1.0.0"
 
-"utf-8-validate@^5.0.2", "utf-8-validate@>=5.0.2":
+"utf-8-validate@^5.0.2":
   "integrity" "sha512-Yek7dAy0v3Kl0orwMlvi7TPtiCNrdfHNd7Gcc/pLq4BLXqfAmd0J7OWMizUQnTTJsyjKn02mU7anqwfmUP4J8Q=="
   "resolved" "https://registry.npmjs.org/utf-8-validate/-/utf-8-validate-5.0.9.tgz"
   "version" "5.0.9"
@@ -3184,10 +3184,12 @@
     "safe-buffer" "~5.1.0"
     "ultron" "~1.1.0"
 
-"ws@^8.12.0":
-  "integrity" "sha512-kU62emKIdKVeEIOIKVegvqpXMSTAMLJozpHZaJNDYqBjzlSYXQGviYwN1osDLJ9av68qHd4a2oSjd7yD4pacig=="
-  "resolved" "https://registry.npmjs.org/ws/-/ws-8.12.0.tgz"
-  "version" "8.12.0"
+"ws@^6.1.2":
+  "integrity" "sha512-rfUqzvz0WxmSXtJpPMX2EeASXabOrSMk1ruMOV3JBTBjo4ac2lDjGGsbQSyxj8Odhw5fBib8ZKEjDNvgouNKYw=="
+  "resolved" "https://registry.npmjs.org/ws/-/ws-6.1.2.tgz"
+  "version" "6.1.2"
+  dependencies:
+    "async-limiter" "~1.0.0"
 
 "xhr-request-promise@^0.1.2":
   "integrity" "sha512-YUBytBsuwgitWtdRzXDDkWAXzhdGB8bYm0sSzMPZT7Z2MBjMSTHFsyCT1yCRATY+XC69DUrQraRAEgcoCRaIPg=="

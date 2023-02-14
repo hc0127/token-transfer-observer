@@ -56,11 +56,11 @@ module.exports = {
     }
   },
   login: async (data,ws) => {
-    let info = data;
+    var[name, password] = data.toString().split('\t');
   
     rows = await database.select("users", {
-      userID: info.userID,
-      password: md5(info.password),
+      userID: name,
+      password: md5(password),
       verified: 1,
     });
 
@@ -69,15 +69,16 @@ module.exports = {
       await database.update("users", {
         token: token
       }, {
-        userID: info.userID
+        userID: name
       });
       // res.send({
       //   status: 'success',
       //   token: token
       // })
+      console.log("Login Successfully");
       ws.send(JSON.stringify({
-        type: "login_confirm",
-        data: {status: 'success',token: token}
+        type: "success",
+        data: rows.data[0]
       }));
     } else {
       // res.send({
@@ -85,23 +86,26 @@ module.exports = {
       //   msg: 'password is not correct'
       // })
       ws.send(JSON.stringify({
-        type: "login_confirm",
-        data: {status: 'error',msg: 'userID or password is not correct'}
+        type: "failed",
+        data: 'userID or password is not correct'
       }));
     }
   },
   register: async (data,ws) =>{
+    var[name, password, email, walletaddress] = replyObject.data.toString().split('\t');
+
     let rows = await database.select("users", {
-      userID: data.userID,
-      wallet: data.wallet,
-      email: data.email,
+      userID: name,
+      password: password,
+      email: email,
+      wallet: walletaddress,
     });
   
     if (rows.status == "failed") {//database failed
       // res.send({ status: "failed", msg: "get: db error" });
       ws.send(JSON.stringify({
-        type: "register_confirm",
-        data: {status: 'error',msg: "get: db error" }
+        type: "success",
+        data: "Register successfully"
       }));
     } else {
       if (rows.data.length > 0) {
@@ -110,8 +114,8 @@ module.exports = {
         //   msg: 'already registered'
         // })
         ws.send(JSON.stringify({
-          type: "register_confirm",
-          data: {status: 'error',msg: "already registered" }
+          type: "failed",
+          data: "Register failed"
         }));
       } else {
         rows = await database.select("transactions", {
@@ -121,8 +125,8 @@ module.exports = {
         if (rows.status == "failed") {//database failed
           // res.send({ status: "failed", msg: "get: db error" });
           ws.send(JSON.stringify({
-            type: "register_confirm",
-            data: {status: 'error',msg: "get: db error" }
+            type: "failed",
+            data: "Register failed"
           }));
         } else {
           var token_amount = 0;
@@ -155,15 +159,15 @@ module.exports = {
           if (rows.status == "failed") {//database failed
             // res.send({ status: "failed", msg: "get list: db error" });
             ws.send(JSON.stringify({
-              type: "register_confirm",
-              data: {status: 'error',msg: "get: db error" }
+              type: "failed",
+              data: "Register failed"
             }));
           } else {
             // res.send(rows);
             ws.send(JSON.stringify({
-              type: "register_confirm",
-              data: {status: 'success'}
-            }));
+              type: "success",
+              data: "Register successfully"
+            }));    
           }
         }
       }

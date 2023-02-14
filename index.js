@@ -31,6 +31,7 @@ let wss = new WSServer({
 var socket = require("./app/socket.js");
 
 wss.on('connection', function connection(ws) {
+  console.log('new client connected')
     ws.on('message', (req) => {
       var fetch = JSON.parse(req.toString());
       const type = fetch.type;
@@ -39,4 +40,4 @@ wss.on('connection', function connection(ws) {
     });
 });
 
-server.listen(4000);
+server.listen(8000);
