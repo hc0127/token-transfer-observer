@@ -27,18 +27,18 @@ module.exports = {
           email: info.email
         });
         ws.send(JSON.stringify({
-          type: "admin_login_confirm",
+          type: "admin_login",
           data: {status: 'success',token: token}
         }));
       } else {
         ws.send(JSON.stringify({
-          type: "admin_login_confirm",
+          type: "admin_login",
           data: {status: 'error',msg: 'password is not correct'}
         }));
       }
     } else {
       ws.send(JSON.stringify({
-        type: "admin_login_confirm",
+        type: "admin_login",
         data: {status: 'error',msg: 'email is not correct'}
       }));
     }
@@ -63,7 +63,6 @@ module.exports = {
         userID: name
       });
 
-      console.log("userID : " + rows.data[0].userID);
       var player = {
         name : rows.data[0].userID,
         password : rows.data[0].password,
@@ -88,7 +87,6 @@ module.exports = {
 
     let rows = await database.selectOr("users", {
       userID: name,
-      password: password,
       email: email,
       wallet: walletaddress,
     });
@@ -96,13 +94,13 @@ module.exports = {
     if (rows.status == "failed") {//database failed
       ws.send(JSON.stringify({
         type: "failed",
-        data: "Register failed"
+        data: "Register failed1"
       }));
     } else {
-      if (rows.data.length > 0) {
+      if (rows.data.length > 0) {//already registered username, email, wallet
         ws.send(JSON.stringify({
           type: "failed",
-          data: "Register failed"
+          data: "Register failed2"
         }));
       } else {
         rows = await database.select("transactions", {
@@ -110,13 +108,12 @@ module.exports = {
         });
   
         if (rows.status == "failed") {//database failed
-          // res.send({ status: "failed", msg: "get: db error" });
           ws.send(JSON.stringify({
             type: "failed",
-            data: "Register failed"
+            data: "Register failed3"
           }));
         } else {
-          var token_amount = 0;
+          var token_amount = 0;//calc token amount
           rows.data.map(row => {
             token_amount += row.amount * 1;
           })
@@ -133,17 +130,14 @@ module.exports = {
             email:email,
             balance:0
           });
-          
-  
+        
           rows = await database.select("users");
           if (rows.status == "failed") {//database failed
-            // res.send({ status: "failed", msg: "get list: db error" });
             ws.send(JSON.stringify({
               type: "failed",
-              data: "Register failed"
+              data: "Register failed4"
             }));
           } else {
-            // res.send(rows);
             ws.send(JSON.stringify({
               type: "success",
               data: "Register successfully"
@@ -155,23 +149,12 @@ module.exports = {
   },
   verify: async (data,ws) =>{
     var [email] = data.toString().split('\t');
-
-    console.log("email", email);
     
     var verify_code = randomstring.generate(20);
 
     const sendmail = require('sendmail')({
-      // logger: {
-      //   debug: console.log,
-      //   info: console.info,
-      //   warn: console.warn,
-      //   error: console.error
-      // },
-      // silent: true,
-      // devPort: 8000, // Default: False
-      // devHost: 'localhost', // Default: localhost
-      smtpPort: 587, // Default: 25
-      smtpHost: 'smtp.gmail.com' // Default: -1 - extra smtp host after resolveMX
+      smtpPort: 587,
+      smtpHost: 'smtp.gmail.com'
     });
 
     sendmail({
@@ -192,8 +175,6 @@ module.exports = {
 
   getUserProfile: async (data,ws) =>{
     var[email] = data.toString().split('\t');
-
-    console.log("email", email);
   
     rows = await database.select("users", {
       email: email
@@ -223,7 +204,7 @@ module.exports = {
     let rows = await database.select("users", {
       email: prevEmail,
     });
-    console.log("profile : ", rows.data[0].u_id);
+
     if(rows.data.length > 0 ){//update
       var u_id = rows.data[0].u_id;
       await database.update("bulletballances", {

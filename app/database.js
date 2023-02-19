@@ -18,8 +18,9 @@ module.exports = {
   },
   selectOr: async (table, params = null) => {
     con = await mysql.createConnection(dbInfo);
-    var sql = "SELECT * FROM " + table + " WHERE 1 = 1";
+    var sql = "SELECT * FROM " + table + " WHERE ";
     for (var i in params) sql += " OR " + i + " = ?";
+    sql = sql.replace('OR','');
     let [rows] = await con.query(sql, Object.values(params));
     if (rows == null || rows == undefined) return { status: "failed" };
     else return { status: "success", data: rows };
