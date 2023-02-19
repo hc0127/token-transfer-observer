@@ -69,7 +69,6 @@ module.exports = {
         password : rows.data[0].password,
         email : rows.data[0].email,
         walletaddress : rows.data[0].wallet,
-        tokenamount : rows.data[0].token_amount,
         coin : balances.data[0].balance
       }
 
