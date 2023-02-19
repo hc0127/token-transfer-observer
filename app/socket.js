@@ -227,23 +227,31 @@ module.exports = {
     }
   },
 
+  userDetail: async(data, ws) =>{
+    var[email] = data.toString();
+    let rows = await database.select("bulletballances", {
+      email: email,
+    });
+
+    let info = rows.data[0];
+    ws.send(JSON.stringify({
+      type:'userdetail',
+      data:info.balance + "\t" +  info.email
+    }));
+  },
+
   savebalance: async (data,ws) =>{
     var[email, balance] = data.toString().split('\t');
     let rows = await database.select("bulletballances", {
       email: email,
     });
-    if(rows.data.length > 0 ){//update
-      await database.update("bulletballances", {
-        balance: balance
-      }, {
-        email: email
-      });
-    }else{//insert
-      rows = await database.insert("bulletballances", {
-        email:email,
-        balance:balance
-      });
-    }
+
+    await database.update("bulletballances", {
+      balance: balance
+    }, {
+      email: email
+    });
+
     ws.send(JSON.stringify({
       type:'success',
       data:balance
