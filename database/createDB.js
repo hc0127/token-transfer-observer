@@ -1,7 +1,7 @@
 var mysql = require("mysql2");
 const dbInfo = require("../config/database.json");
 
-delete dbInfo["database"];
+// delete dbInfo["database"];
 console.log(dbInfo);
 var con = mysql.createConnection(dbInfo);
 
