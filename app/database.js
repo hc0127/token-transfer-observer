@@ -1,6 +1,6 @@
 var mysql = require("mysql2/promise");
 const dbInfo = require("../config/database.json");
-let con
+let con;
 
 module.exports = {
   select: async (table, params = null) => {

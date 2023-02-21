@@ -2,6 +2,5 @@
     "host": "localhost",
     "user": "root",
     "password": "tokengamepwd",
-    "database": "tokenobserver",
-    "port":3306
+    "database": "tokenobserver"
 }
