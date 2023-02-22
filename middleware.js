@@ -6,6 +6,7 @@ module.exports = async (req, res, next) => {
         next();
     } else {
         var token = req.headers['token'];
+        console.log(token);
         let tokenCheck = await database.select("admin", { token: token });
 
         if (tokenCheck.data.length < 0 || tokenCheck.data.status == 'error') {
