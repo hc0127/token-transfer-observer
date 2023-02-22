@@ -124,6 +124,7 @@ module.exports = {
             password:md5(password),
             wallet:walletaddress,
             token_amount: token_amount,
+            score_amount: 0,
           });
 
           rows = await database.insert("bulletballances", {
