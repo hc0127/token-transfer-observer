@@ -6,6 +6,8 @@ let WSServer = require('ws').Server;
 const bodyParser = require("body-parser");
 const cors = require('cors');
 
+let wss = new WSServer({port:4010});
+
 app.use(bodyParser.json({ limit: "10mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
@@ -24,10 +26,7 @@ app.use("/user", user);
 
 server.on('request', app);
 
-let wss = new WSServer({port:4010});
-
 var socket = require("./app/socket.js");
-
 wss.on('connection', function connection(ws) {
   console.log('new client connected')
     ws.on('message', (req) => {
