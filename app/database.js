@@ -4,6 +4,7 @@ let con;
 
 module.exports = {
   select: async (table, params = null) => {
+    console.log('select',table,params,dbInfo);
     con = await mysql.createConnection(dbInfo);
     var sql = "SELECT * FROM " + table + " WHERE 1 = 1";
     for (var i in params) sql += " AND " + i + " = ?";
