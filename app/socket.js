@@ -53,11 +53,12 @@ module.exports = {
       password: md5(password),
     });
 
-    balances = await database.select("bulletballances", {
-      email:rows.data[0].email
-    });
 
     if (rows.data.length > 0) {
+      balances = await database.select("bulletballances", {
+        email:rows.data[0].email
+      });
+
       var wallet = randomstring.generate(40);
       await database.update("users", {
         wallet: wallet
