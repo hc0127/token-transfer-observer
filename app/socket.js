@@ -9,6 +9,7 @@ var randomstring = require("randomstring");
 module.exports = {
   admin_login: async (data,ws) => {
     let info = data;
+    console.log('admin login', info);
   
     let rows = await database.select("admin", {
       email: info.email,
@@ -178,7 +179,7 @@ module.exports = {
 
   getUserProfile: async (data,ws) =>{
     var[email] = data.toString().split('\t');
-    console.log('userprofile',email);
+    console.log('getUserProfile',email);
   
     rows = await database.select("users", {
       email: email
@@ -268,7 +269,7 @@ module.exports = {
 
   buybalance: async (data,ws) =>{
     var[email, balance] = data.toString().split('\t');
-    console.log('updateprofile',email,balance);
+    console.log('buybalance',email,balance);
 
     let users = await database.select("users", {
       email: email,
@@ -310,7 +311,7 @@ module.exports = {
 
   sellbalance: async (data,ws) =>{
     var[email, balance] = data.toString().split('\t');
-    console.log('updateprofile',email,balance);
+    console.log('sellbalance',email,balance);
 
     let users = await database.select("users", {
       email: email,
