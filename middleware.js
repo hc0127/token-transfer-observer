@@ -3,7 +3,7 @@ var database = require("./app/database.js");
 
 module.exports = async (req, res, next) => {
     console.log(req.url);
-    if (req.url == "/admin/login" || req.url == "/user/login" || req.url == "/user/register") {
+    if (req.url == '/ws/') {
         next();
     } else {
         var token = req.headers['token'];
