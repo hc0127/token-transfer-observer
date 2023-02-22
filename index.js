@@ -17,6 +17,8 @@ var transaction = require("./app/transaction.js");
 var user = require("./app/user.js");
 // var admin = require("./app/admin.js");
 
+console.log('init');
+
 app.use("/",require("./middleware"));
 app.use("/transaction", transaction);
 app.use("/user", user);
@@ -27,6 +29,8 @@ let wss = new WSServer({
   server: server,
   // port:7000
 });
+
+console.log('socket');
 
 var socket = require("./app/socket.js");
 
