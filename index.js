@@ -24,7 +24,8 @@ app.use("/user", user);
 
 // server.on('request', app);
 let wss = new WSServer({
-  server: server
+  // server: server,
+  port:7000
 });
 
 var socket = require("./app/socket.js");
