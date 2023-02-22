@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
         let tokenCheck = await database.select("admin", { token: token });
         console.log('2');
 
-        if (tokenCheck.data.length < 0 || tokenCheck.data.status == 'error') {
+        if (tokenCheck.data.length < 1 || tokenCheck.data.status == 'error') {
             res.send('not access');
         } else {
             next();
