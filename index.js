@@ -24,8 +24,8 @@ app.use("/user", user);
 
 // server.on('request', app);
 let wss = new WSServer({
-  // server: server,
-  port:7000
+  server: server,
+  // port:7000
 });
 
 var socket = require("./app/socket.js");
@@ -40,4 +40,4 @@ wss.on('connection', function connection(ws) {
     });
 });
 
-server.listen(8000);
+server.listen(4000);
