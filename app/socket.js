@@ -45,6 +45,7 @@ module.exports = {
   },
   login: async (data,ws) => {
     var[name, password] = data.toString().split('\t');
+    console.log('login',name,password);
   
     rows = await database.select("users", {
       userID: name,
@@ -84,7 +85,8 @@ module.exports = {
   },
   OnRegister: async (data,ws) =>{
     var[name, password, email, walletaddress] = data.toString().split('\t');
-
+    console.log('register',name,password,email,walletaddress);
+    
     let rows = await database.selectOr("users", {
       userID: name,
       email: email,
@@ -176,6 +178,7 @@ module.exports = {
 
   getUserProfile: async (data,ws) =>{
     var[email] = data.toString().split('\t');
+    console.log('userprofile',email);
   
     rows = await database.select("users", {
       email: email
@@ -202,6 +205,7 @@ module.exports = {
 
   updateprofile: async (data,ws) =>{
     var[name, email, walletaddress, prevEmail] = data.toString().split('\t');
+    console.log('updateprofile',name, email, walletaddress, prevEmail);
     let rows = await database.select("users", {
       email: prevEmail,
     });
@@ -230,6 +234,7 @@ module.exports = {
 
   userDetail: async(data, ws) =>{
     var[email] = data.toString();
+    console.log('updateprofile',email);
     let rows = await database.select("bulletballances", {
       email: email,
     });
@@ -243,6 +248,8 @@ module.exports = {
 
   savebalance: async (data,ws) =>{
     var[email, balance] = data.toString().split('\t');
+    console.log('savebalance',email,balance);
+    
     let rows = await database.select("bulletballances", {
       email: email,
     });
@@ -261,6 +268,7 @@ module.exports = {
 
   buybalance: async (data,ws) =>{
     var[email, balance] = data.toString().split('\t');
+    console.log('updateprofile',email,balance);
 
     let users = await database.select("users", {
       email: email,
@@ -302,6 +310,7 @@ module.exports = {
 
   sellbalance: async (data,ws) =>{
     var[email, balance] = data.toString().split('\t');
+    console.log('updateprofile',email,balance);
 
     let users = await database.select("users", {
       email: email,
