@@ -1,6 +1,6 @@
 var express = require("express");
 var app = express();
-let server = require('http').createServer(app);
+let server = require('http').createServer();
 let WSServer = require('ws').Server;
 
 const bodyParser = require("body-parser");
@@ -17,20 +17,16 @@ var transaction = require("./app/transaction.js");
 var user = require("./app/user.js");
 // var admin = require("./app/admin.js");
 
-console.log('init');
-
 app.use("/",require("./middleware"));
 app.use("/transaction", transaction);
 app.use("/user", user);
 // app.use("/admin", admin);
 
-// server.on('request', app);
-let wss = new WSServer({
-  server: server,
-  // port:7000
-});
+server.on('request', app);
 
-console.log('socket');
+let wss = new WSServer({
+  server: server
+});
 
 var socket = require("./app/socket.js");
 
