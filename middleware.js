@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
         next();
     } else {
         var token = req.headers['token'];
-        console.log('1');
+        console.log(token);
         let tokenCheck = await database.select("admin", { token: token });
         console.log('2');
 
