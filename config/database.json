@@ -1,6 +1,6 @@
 {
     "host": "localhost",
     "user": "root",
-    "password": "tokengamepwd",
+    "password": "",
     "database": "tokenobserver"
 }
